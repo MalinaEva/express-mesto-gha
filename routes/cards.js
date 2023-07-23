@@ -1,10 +1,10 @@
 const router = require('express').Router();
 const {
-	getCards,
-	getCardById,
-	createCard,
-	likeCard,
-	dislikeCard
+  getCards,
+  getCardById,
+  createCard,
+  likeCard,
+  dislikeCard
 } = require('../controllers/cards'); // Эти контроллеры должны быть созданы
 
 router.get('/', getCards);

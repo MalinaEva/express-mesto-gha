@@ -1,11 +1,11 @@
 const router = require('express').Router();
 const validateProfileUpdates = require('../middleware/validateProfileUpdates');
 const {
-	getUsers,
-	getUser,
-	createUser,
-	updateProfile,
-	updateAvatar
+  getUsers,
+  getUser,
+  createUser,
+  updateProfile,
+  updateAvatar
 } = require('../controllers/users');
 
 router.get('/', getUsers);

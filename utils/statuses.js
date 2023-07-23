@@ -9,12 +9,12 @@ const USER_NOT_FOUND = 'Пользователь не найден';
 const NOT_VALID_DATA = 'Переданы некорректные данные';
 
 module.exports = {
-	OK,
-	CREATED,
-	BAD_REQUEST,
-	NOT_FOUND,
-	INTERNAL_SERVER_ERROR,
-	CARD_NOT_FOUND,
-	USER_NOT_FOUND,
-	NOT_VALID_DATA,
+  OK,
+  CREATED,
+  BAD_REQUEST,
+  NOT_FOUND,
+  INTERNAL_SERVER_ERROR,
+  CARD_NOT_FOUND,
+  USER_NOT_FOUND,
+  NOT_VALID_DATA,
 };
