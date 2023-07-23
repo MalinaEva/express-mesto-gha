@@ -1,0 +1,18 @@
+const STATUS_OK = 200;
+const STATUS_CREATED = 201;
+const STATUS_BAD_REQUEST = 400;
+const STATUS_NOT_FOUND = 404;
+const STATUS_INTERNAL_SERVER_ERROR = 500;
+
+const CARD_NOT_FOUND = 'Карточка не найдена';
+const USER_NOT_FOUND = 'Пользователь не найден';
+
+module.exports = {
+	STATUS_OK,
+	STATUS_CREATED,
+	STATUS_BAD_REQUEST,
+	STATUS_NOT_FOUND,
+	STATUS_INTERNAL_SERVER_ERROR,
+	CARD_NOT_FOUND,
+	USER_NOT_FOUND,
+}
