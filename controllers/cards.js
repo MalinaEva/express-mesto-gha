@@ -21,7 +21,7 @@ module.exports.deleteCard = (req, res) => {
       return sendResponse(res, { message: statuses.CARD_DELETED });
     })
     .catch((err) => handleError(err, res));
-}
+};
 
 module.exports.getCards = (req, res) => {
   card.find({}).select('-__v')

@@ -8,6 +8,7 @@ const CARD_NOT_FOUND = 'Карточка не найдена';
 const CARD_DELETED = 'Карточка удалена';
 const USER_NOT_FOUND = 'Пользователь не найден';
 const NOT_VALID_DATA = 'Переданы некорректные данные';
+const NOT_FOUND_MESSAGE = 'Страница не найдена';
 
 module.exports = {
   OK,
@@ -19,4 +20,5 @@ module.exports = {
   CARD_DELETED,
   USER_NOT_FOUND,
   NOT_VALID_DATA,
+  NOT_FOUND_MESSAGE,
 };
