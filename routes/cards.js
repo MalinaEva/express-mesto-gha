@@ -4,7 +4,7 @@ const {
   getCardById,
   createCard,
   likeCard,
-  dislikeCard
+  dislikeCard,
 } = require('../controllers/cards'); // Эти контроллеры должны быть созданы
 
 router.get('/', getCards);

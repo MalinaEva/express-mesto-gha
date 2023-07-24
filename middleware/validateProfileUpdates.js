@@ -11,7 +11,7 @@ const validateProfileUpdates = (req, res, next) => {
     return sendResponse(res, { error: NOT_VALID_DATA }, BAD_REQUEST);
   }
 
-  next();
+  return next();
 };
 
 module.exports = validateProfileUpdates;
