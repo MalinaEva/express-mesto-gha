@@ -3,6 +3,7 @@ const {
   getCards,
   getCardById,
   createCard,
+  deleteCard,
   likeCard,
   dislikeCard,
 } = require('../controllers/cards'); // Эти контроллеры должны быть созданы
@@ -10,6 +11,7 @@ const {
 router.get('/', getCards);
 router.get('/:cardId', getCardById);
 router.post('/', createCard);
+router.delete('/:cardId', deleteCard);
 router.put('/:cardId/likes', likeCard);
 router.delete('/:cardId/likes', dislikeCard);
 

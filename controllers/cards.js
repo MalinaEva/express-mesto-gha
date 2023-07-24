@@ -12,6 +12,17 @@ module.exports.createCard = (req, res) => {
     .catch((err) => handleError(err, res));
 };
 
+module.exports.deleteCard = (req, res) => {
+  card.findByIdAndRemove(req.params.cardId)
+    .then((data) => {
+      if (!data) {
+        return sendResponse(res, { message: statuses.CARD_NOT_FOUND }, statuses.NOT_FOUND);
+      }
+      return sendResponse(res, { message: statuses.CARD_DELETED });
+    })
+    .catch((err) => handleError(err, res));
+}
+
 module.exports.getCards = (req, res) => {
   card.find({}).select('-__v')
     .populate([

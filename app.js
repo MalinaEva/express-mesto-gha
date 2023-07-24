@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const usersRouter = require('./routes/users');
 const cardsRouter = require('./routes/cards');
+const { sendResponse } = require('./utils/sendResponse');
 
 const app = express();
 const port = 3000;
@@ -21,6 +22,11 @@ app.use((req, res, next) => {
 });
 app.use('/users', usersRouter);
 app.use('/cards', cardsRouter);
+
+app.use((req, res) => {
+  return sendResponse(res, { message: '' }, 404);
+});
+
 app.listen(port, () => {
   console.log(`Сервер запущен на порту ${port}`);
 });
