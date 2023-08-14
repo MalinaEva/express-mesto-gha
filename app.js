@@ -27,5 +27,6 @@ app.post('/signup', validateRequest(registerValidationSchema), createUser);
 app.use((req, res) => sendResponse(res, { message: NOT_FOUND_MESSAGE }, NOT_FOUND));
 
 app.listen(port, () => {
+  // eslint-disable-next-line no-console
   console.log(`Сервер запущен на порту ${port}`);
 });

@@ -1,9 +1,9 @@
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 const user = require('../models/user');
 const statuses = require('../utils/statuses');
 const handleError = require('../middleware/errorHandler');
 const { sendResponse } = require('../utils/sendResponse');
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
 
 module.exports.getUsers = (req, res) => {
   user.find({}).select('-__v')
@@ -23,18 +23,22 @@ module.exports.getUser = (req, res) => {
 };
 
 module.exports.createUser = (req, res) => {
-  const { name, about, avatar, email, password } = req.body;
+  const {
+    name,
+    about,
+    avatar,
+    email,
+    password
+  } = req.body;
 
   bcrypt.hash(password, 10)
-  .then((hashedPassword) => {
-    return user.create({
-      name,
-      about,
-      avatar,
-      email,
-      password: hashedPassword
-    });
-  })
+  .then(hashedPassword => user.create({
+    name,
+    about,
+    avatar,
+    email,
+    password: hashedPassword
+  }))
   .then((data) => {
     const { password, ...userData } = data.toObject();
     sendResponse(res, userData, statuses.CREATED);
