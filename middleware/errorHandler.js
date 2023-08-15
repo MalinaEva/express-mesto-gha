@@ -10,8 +10,12 @@ const {
 } = require('../utils/statuses');
 
 function handleError(err, res) {
+  console.log(err.name, err.message, err.statusCode);
   if (['CastError', 'ValidationError'].includes(err.name)) {
     return sendResponse(res, { message: NOT_VALID_DATA }, BAD_REQUEST);
+  }
+  if (err.name === 'AuthError') {
+    return sendResponse(res, { message: err.message }, UNAUTHORIZED);
   }
   if (err.statusCode === UNAUTHORIZED) {
     return sendResponse(res, { message: UNAUTHORIZED_MESSAGE }, UNAUTHORIZED);

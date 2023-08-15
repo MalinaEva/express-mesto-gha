@@ -4,6 +4,7 @@ const user = require('../models/user');
 const statuses = require('../utils/statuses');
 const handleError = require('../middleware/errorHandler');
 const { sendResponse } = require('../utils/sendResponse');
+const AuthError = require('../errors/AuthError');
 
 module.exports.getUsers = (req, res) => {
   user.find({}).select('-__v')
@@ -77,28 +78,24 @@ exports.login = (req, res) => {
   user.findOne({ email }).select('+password')
     .then((data) => {
       if (!data) {
-        throw new Error('Неправильные почта или пароль');
+        throw new AuthError();
       }
 
       return bcrypt.compare(password, data.password)
         .then((matched) => {
           if (!matched) {
-            throw new Error('Неправильные почта или пароль');
+            throw new AuthError();
           }
 
           const JWT_SECRET = process.env.JWT_SECRET || 'eyJhbGciOiJIUzI1NiJ9.eyJSb2xlIjoiQWRtaW4iLCJJc3N1ZXIiOiJJc3N';
 
           const token = jwt.sign(
-            { _id: user._id.toString() },
+            { _id: data._id.toString() },
             JWT_SECRET,
             { expiresIn: '7d' },
           );
 
-          res.cookie('jwt', token, {
-            maxAge: 3600000 * 24 * 7,
-            httpOnly: true,
-            sameSite: 'strict',
-          }).send({ message: 'Успешный вход' });
+          return sendResponse(res, { message: 'Успешный вход', token });
         });
     })
     .catch((err) => handleError(err, res));
