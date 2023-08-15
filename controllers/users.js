@@ -28,22 +28,23 @@ module.exports.createUser = (req, res) => {
     about,
     avatar,
     email,
-    password
+    password,
   } = req.body;
 
   bcrypt.hash(password, 10)
-  .then(hashedPassword => user.create({
-    name,
-    about,
-    avatar,
-    email,
-    password: hashedPassword
-  }))
-  .then((data) => {
-    const { password, ...userData } = data.toObject();
-    sendResponse(res, userData, statuses.CREATED);
-  })
-  .catch((err) => handleError(err, res));
+    .then((hashedPassword) => user.create({
+      name,
+      about,
+      avatar,
+      email,
+      password: hashedPassword,
+    }))
+    .then((data) => {
+      const userData = { ...data.toObject() };
+      delete userData.password;
+      sendResponse(res, userData, statuses.CREATED);
+    })
+    .catch((err) => handleError(err, res));
 };
 
 exports.updateProfile = (req, res) => {
@@ -74,44 +75,42 @@ exports.login = (req, res) => {
   const { email, password } = req.body;
 
   user.findOne({ email }).select('+password')
-  .then((user) => {
-    if (!user) {
-      throw new Error('Неправильные почта или пароль');
-    }
-
-    return bcrypt.compare(password, user.password)
-    .then((matched) => {
-      if (!matched) {
+    .then((data) => {
+      if (!data) {
         throw new Error('Неправильные почта или пароль');
       }
 
-      const JWT_SECRET = process.env.JWT_SECRET || 'eyJhbGciOiJIUzI1NiJ9.eyJSb2xlIjoiQWRtaW4iLCJJc3N1ZXIiOiJJc3N';
+      return bcrypt.compare(password, data.password)
+        .then((matched) => {
+          if (!matched) {
+            throw new Error('Неправильные почта или пароль');
+          }
 
-      const token = jwt.sign(
-        { _id: user._id.toString() },
-        JWT_SECRET,
-        { expiresIn: '7d' }
-      );
+          const JWT_SECRET = process.env.JWT_SECRET || 'eyJhbGciOiJIUzI1NiJ9.eyJSb2xlIjoiQWRtaW4iLCJJc3N1ZXIiOiJJc3N';
 
-      res.cookie('jwt', token, {
-        maxAge: 3600000 * 24 * 7,
-        httpOnly: true,
-        sameSite: 'strict'
-      }).send({ message: 'Успешный вход' });
-    });
-  })
-  .catch((err) => handleError(err, res));
+          const token = jwt.sign(
+            { _id: user._id.toString() },
+            JWT_SECRET,
+            { expiresIn: '7d' },
+          );
+
+          res.cookie('jwt', token, {
+            maxAge: 3600000 * 24 * 7,
+            httpOnly: true,
+            sameSite: 'strict',
+          }).send({ message: 'Успешный вход' });
+        });
+    })
+    .catch((err) => handleError(err, res));
 };
 
 module.exports.getCurrentUser = (req, res) => {
   user.findById(req.user._id)
-  .then(user => {
-    if (!user) {
-      return sendResponse(res, { message: 'Пользователь не найден' }, statuses.NOT_FOUND);
-    }
-    res.send(user);
-  })
-  .catch(err => {
-    return sendResponse(res, { message: 'Произошла ошибка на сервере' }, statuses.INTERNAL_SERVER_ERROR);
-  });
+    .then((data) => {
+      if (!data) {
+        return sendResponse(res, { message: 'Пользователь не найден' }, statuses.NOT_FOUND);
+      }
+      return res.send(data);
+    })
+    .catch(() => sendResponse(res, { message: 'Произошла ошибка на сервере' }, statuses.INTERNAL_SERVER_ERROR));
 };

@@ -14,18 +14,18 @@ const loginValidationSchema = Joi.object({
 }).options({ stripUnknown: true });
 
 const userIdValidationSchema = Joi.object({
-  userId: Joi.string().pattern(/^[0-9a-fA-F]{24}$/).required()
+  userId: Joi.string().pattern(/^[0-9a-fA-F]{24}$/).required(),
 });
 
 const validateProfileUpdatesSchema = Joi.object({
   name: Joi.string().min(2).max(30),
-  about: Joi.string().min(2).max(30)
+  about: Joi.string().min(2).max(30),
 }).options({ stripUnknown: true });
 
 const validateAvatarUpdateSchema = Joi.object({
   avatar: Joi.string()
-  .pattern(/^https?:\/\/(www\.)?[\w\-._~:/?#[\]@!$&'()*+,;=]+#?$/)
-  .required()
+    .pattern(/^https?:\/\/(www\.)?[\w\-._~:/?#[\]@!$&'()*+,;=]+#?$/)
+    .required(),
 }).options({ stripUnknown: true });
 
 module.exports = {
@@ -33,5 +33,5 @@ module.exports = {
   loginValidationSchema,
   userIdValidationSchema,
   validateAvatarUpdateSchema,
-  validateProfileUpdatesSchema
+  validateProfileUpdatesSchema,
 };

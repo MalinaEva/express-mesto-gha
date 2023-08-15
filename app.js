@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
+const { errors } = require('celebrate');
 const usersRouter = require('./routes/users');
 const cardsRouter = require('./routes/cards');
 const { sendResponse } = require('./utils/sendResponse');
@@ -25,6 +26,7 @@ app.post('/signin', validateRequest(loginValidationSchema), login);
 app.post('/signup', validateRequest(registerValidationSchema), createUser);
 
 app.use((req, res) => sendResponse(res, { message: NOT_FOUND_MESSAGE }, NOT_FOUND));
+app.use(errors());
 
 app.listen(port, () => {
   // eslint-disable-next-line no-console
