@@ -18,6 +18,9 @@ module.exports.deleteCard = (req, res) => {
       if (!data) {
         return sendResponse(res, { message: statuses.CARD_NOT_FOUND }, statuses.NOT_FOUND);
       }
+      if (data.owner.toString() !== req.user._id) {
+        return sendResponse(res, { message: statuses.FORBIDDEN_MESSAGE }, statuses.FORBIDDEN);
+      }
       return sendResponse(res, { message: statuses.CARD_DELETED });
     })
     .catch((err) => handleError(err, res));
