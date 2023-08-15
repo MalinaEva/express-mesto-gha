@@ -10,7 +10,6 @@ const {
 } = require('../utils/statuses');
 
 function handleError(err, res) {
-  console.log(err.name, err.message, err.statusCode);
   if (['CastError', 'ValidationError'].includes(err.name)) {
     return sendResponse(res, { message: NOT_VALID_DATA }, BAD_REQUEST);
   }
