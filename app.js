@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const { errors } = require('celebrate');
+const { DB_URL } = require('./config');
 const usersRouter = require('./routes/users');
 const cardsRouter = require('./routes/cards');
 const { sendResponse } = require('./utils/sendResponse');
@@ -13,7 +14,7 @@ const { loginValidationSchema, registerValidationSchema } = require('./validatio
 const app = express();
 const port = 3000;
 
-mongoose.connect('mongodb://localhost:27017/mestodb', {
+mongoose.connect(DB_URL, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });

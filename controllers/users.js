@@ -1,6 +1,7 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const user = require('../models/user');
+const { JWT_SECRET } = require('../config');
 const statuses = require('../utils/statuses');
 const handleError = require('../middleware/errorHandler');
 const { sendResponse } = require('../utils/sendResponse');
@@ -86,8 +87,6 @@ exports.login = (req, res) => {
           if (!matched) {
             throw new AuthError();
           }
-
-          const JWT_SECRET = process.env.JWT_SECRET || 'eyJhbGciOiJIUzI1NiJ9.eyJSb2xlIjoiQWRtaW4iLCJJc3N1ZXIiOiJJc3N';
 
           const token = jwt.sign(
             { _id: data._id.toString() },
