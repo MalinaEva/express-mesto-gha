@@ -15,6 +15,7 @@ const NOT_FOUND_MESSAGE = 'Страница не найдена';
 const UNAUTHORIZED_MESSAGE = 'Необходима авторизация';
 const FORBIDDEN_MESSAGE = 'Недостаточно прав';
 const CONFLICT_MESSAGE = 'Пользователь с таким email уже существует';
+const INTERNAL_SERVER_ERROR_MESSAGE = 'На сервере произошла ошибка';
 
 module.exports = {
   OK,
@@ -22,6 +23,7 @@ module.exports = {
   BAD_REQUEST,
   NOT_FOUND,
   INTERNAL_SERVER_ERROR,
+  INTERNAL_SERVER_ERROR_MESSAGE,
   CARD_NOT_FOUND,
   CARD_DELETED,
   USER_NOT_FOUND,

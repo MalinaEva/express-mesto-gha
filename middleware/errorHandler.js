@@ -3,6 +3,7 @@ const {
   NOT_VALID_DATA,
   BAD_REQUEST,
   INTERNAL_SERVER_ERROR,
+  INTERNAL_SERVER_ERROR_MESSAGE,
   UNAUTHORIZED,
   UNAUTHORIZED_MESSAGE,
   CONFLICT,
@@ -22,7 +23,7 @@ function handleError(err, res) {
   if (err.code === 11000) {
     return sendResponse(res, { message: CONFLICT_MESSAGE }, CONFLICT);
   }
-  return sendResponse(res, { message: err.message }, INTERNAL_SERVER_ERROR);
+  return sendResponse(res, { message: INTERNAL_SERVER_ERROR_MESSAGE }, INTERNAL_SERVER_ERROR);
 }
 
 module.exports = handleError;
